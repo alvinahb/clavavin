@@ -37,3 +37,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{})
 }
+
+func (m *Repository) AddWine(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "add_wine.page.tmpl", &models.TemplateData{})
+}

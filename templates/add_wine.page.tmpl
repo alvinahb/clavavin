@@ -1,0 +1,131 @@
+{{template "base" .}}
+
+{{define "css"}}
+    <style>
+        .btn {
+            background-color: rgb(8, 160, 8);
+            border-color: rgb(8, 160, 8);
+        }
+        .btn:hover {
+            background-color: rgb(8, 160, 8);
+            border-color: rgb(8, 160, 8);
+        }
+        .btn:active {
+            background-color: rgb(8, 160, 8);
+            border-color: rgb(8, 160, 8);
+        }
+    </style>
+{{end}}
+
+{{define "content"}}
+    <form action="/nouveau-vin" method="post">
+        <div class="row">
+            <div class="col-4 align-self-center">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputBottle" placeholder="Nom de la bouteille">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputDomain" placeholder="Nom du domaine">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2 justify-content-center">
+                            <div class="col-5">
+                                <input type="number" min="1900" max="2023" step="1" class="form-control text-center" id="inputYear" placeholder="Millésime">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="row mb-2 mt-2">
+                            <div class="col-4">
+                                <select class="form-select" id="inputAppellation1">
+                                    <option value="" selected></option>
+                                    <option value="AOC">AOC</option>
+                                    <option value="AOP">AOP</option>
+                                </select>                        
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="inputAppellation2" placeholder="Appelation">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputLocation" placeholder="Origine géographique">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-6">
+                                <input type="text" class="form-control text-center" id="inputColor" placeholder="Couleur">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control text-center" id="inputCulture" placeholder="Culture">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputVariety" placeholder="Cépage(s)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row justify-content-center mt-4">
+                    <div class="col-10">
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputRobe" placeholder="Robe">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2 justify-content-center">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputNose" placeholder="Nez">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputTaste" placeholder="Palais">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputAssociations" placeholder="Association de plats">
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control text-center" id="inputSeason" placeholder="Saison">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 align-self-center">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12" style="font-style: italic; text-align: center;">
+                                Possibilité d'ajouter une photo à venir !
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="text-align: center;">
+            <div>
+                <button type="submit" class="btn btn-primary mt-5">Valider et ajouter</button>
+            </div>
+        </div>
+    </form>
+{{end}}
