@@ -1,6 +1,7 @@
 {{template "base" .}}
 
 {{define "css"}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.1/dist/css/datepicker.min.css">
     <style>
         .btn {
             background-color: rgb(8, 160, 8);
@@ -18,24 +19,24 @@
 {{end}}
 
 {{define "content"}}
-    <form action="/nouveau-vin" method="post">
+    <form action="/nouveau-vin" method="post" class="needs-validation" novalidate>
         <div class="row">
             <div class="col-4 align-self-center">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputBottle" placeholder="Nom de la bouteille">
+                                <input type="text" class="form-control text-center" id="inputBottle" placeholder="Nom de la bouteille*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputDomain" placeholder="Nom du domaine">
+                                <input type="text" class="form-control text-center" id="inputDomain" placeholder="Nom du domaine*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2 justify-content-center">
-                            <div class="col-5">
-                                <input type="number" min="1900" max="2023" step="1" class="form-control text-center" id="inputYear" placeholder="Millésime">
+                            <div class="col-6">
+                                <input type="text" class="form-control text-center" id="inputYear" name="inputYear" placeholder="Millésime*" required>
                             </div>
                         </div>
                     </div>
@@ -59,12 +60,12 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputLocation" placeholder="Origine géographique">
+                                <input type="text" class="form-control text-center" id="inputLocation" placeholder="Origine géographique*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" id="inputColor" placeholder="Couleur">
+                                <input type="text" class="form-control text-center" id="inputColor" placeholder="Couleur*" required>
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" id="inputCulture" placeholder="Culture">
@@ -72,7 +73,7 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputVariety" placeholder="Cépage(s)">
+                                <input type="text" class="form-control text-center" id="inputVariety" placeholder="Cépage(s)*" required>
                             </div>
                         </div>
                     </div>
@@ -124,8 +125,78 @@
 
         <div class="row" style="text-align: center;">
             <div>
-                <button type="submit" class="btn btn-primary mt-5">Valider et ajouter</button>
+                <button type="button" class="btn btn-primary mt-5" id="submitButton">Valider et ajouter</button>
             </div>
         </div>
     </form>
+{{end}}
+
+{{define "js"}}
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.1/dist/js/datepicker-full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Date picker
+        const elem = document.querySelector('input[name="inputYear"]');
+        const datepicker = new Datepicker(elem, {
+            pickLevel: 2,
+            format: "yyyy",
+        });
+
+        // Form validation
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // Result alert
+        let attention = Prompt();
+        function Prompt() {
+            let toast = function(c) {
+                const {
+                    msg = "",
+                    icon = "",
+                } = c;
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    title: msg,
+                    position: 'top-end',
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({})
+            }
+
+            return {
+                toast: toast,
+            }
+        }
+
+        document.getElementById("submitButton").addEventListener("click", function () {
+            attention.toast({icon: "success", msg: "Vin ajouté avec succès !"});
+        })
+
+    </script>
 {{end}}

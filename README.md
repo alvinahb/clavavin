@@ -7,3 +7,5 @@ This is the repository for Clavavin application.
 - Uses the [chi](github.com/go-chi/chi/v5) router
 - Uses [alex edwards SCS](github.com/alexedwards/scs/v2) session management
 - Uses [nosurf](github.com/justinas/nosurf)
+- Uses [vanillajs-datepicker](https://mymth.github.io/vanillajs-datepicker/#/)
+- Uses [sweetalert2](https://sweetalert2.github.io/)
