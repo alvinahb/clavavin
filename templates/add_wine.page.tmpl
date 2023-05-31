@@ -20,23 +20,24 @@
 
 {{define "content"}}
     <form action="/nouveau-vin" method="post" class="needs-validation" novalidate>
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
         <div class="row">
             <div class="col-4 align-self-center">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputBottle" placeholder="Nom de la bouteille*" required>
+                                <input type="text" class="form-control text-center" name="bottle" placeholder="Nom de la bouteille*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputDomain" placeholder="Nom du domaine*" required>
+                                <input type="text" class="form-control text-center" name="domain" placeholder="Nom du domaine*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2 justify-content-center">
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" id="inputYear" name="inputYear" placeholder="Millésime*" required>
+                                <input type="text" class="form-control text-center" name="year" placeholder="Millésime*" required>
                             </div>
                         </div>
                     </div>
@@ -48,32 +49,32 @@
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-4">
-                                <select class="form-select" id="inputAppellation1">
+                                <select class="form-select" name="appellationType">
                                     <option value="" selected></option>
                                     <option value="AOC">AOC</option>
                                     <option value="AOP">AOP</option>
                                 </select>                        
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="inputAppellation2" placeholder="Appelation">
+                                <input type="text" class="form-control" name="appellationName" placeholder="Appellation">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputLocation" placeholder="Origine géographique*" required>
+                                <input type="text" class="form-control text-center" name="location" placeholder="Origine géographique*" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" id="inputColor" placeholder="Couleur*" required>
+                                <input type="text" class="form-control text-center" name="color" placeholder="Couleur*" required>
                             </div>
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" id="inputCulture" placeholder="Culture">
+                                <input type="text" class="form-control text-center" name="culture" placeholder="Culture">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputVariety" placeholder="Cépage(s)*" required>
+                                <input type="text" class="form-control text-center" name="variety" placeholder="Cépage(s)">
                             </div>
                         </div>
                     </div>
@@ -83,27 +84,27 @@
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputRobe" placeholder="Robe">
+                                <input type="text" class="form-control text-center" name="robe" placeholder="Robe">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2 justify-content-center">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputNose" placeholder="Nez">
+                                <input type="text" class="form-control text-center" name="nose" placeholder="Nez">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputTaste" placeholder="Palais">
+                                <input type="text" class="form-control text-center" name="taste" placeholder="Palais">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputAssociations" placeholder="Association de plats">
+                                <input type="text" class="form-control text-center" name="associations" placeholder="Association de plats">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" id="inputSeason" placeholder="Saison">
+                                <input type="text" class="form-control text-center" name="season" placeholder="Saison">
                             </div>
                         </div>
                     </div>
@@ -125,7 +126,7 @@
 
         <div class="row" style="text-align: center;">
             <div>
-                <button type="button" class="btn btn-primary mt-5" id="submitButton">Valider et ajouter</button>
+                <button type="submit" class="btn btn-primary mt-5" id="submitButton">Valider et ajouter</button>
             </div>
         </div>
     </form>
@@ -136,8 +137,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        document.getElementById("submitButton").addEventListener("click", function () {
+            attention.toast({icon: "success", msg: "Vin ajouté avec succès !"});
+        })
+
         // Date picker
-        const elem = document.querySelector('input[name="inputYear"]');
+        const elem = document.querySelector('input[name="year"]');
         const datepicker = new Datepicker(elem, {
             pickLevel: 2,
             format: "yyyy",
@@ -193,10 +198,6 @@
                 toast: toast,
             }
         }
-
-        document.getElementById("submitButton").addEventListener("click", function () {
-            attention.toast({icon: "success", msg: "Vin ajouté avec succès !"});
-        })
 
     </script>
 {{end}}
