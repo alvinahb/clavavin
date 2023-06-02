@@ -1,0 +1,16 @@
+create_table("wine") {
+  t.Column("id", "integer", {primary: true})
+  t.Column("name", "string", {})
+  t.Column("domain", "string", {})
+  t.Column("year", "string", {"size": 4})
+  t.Column("appellation_type", "string", {"size": 3, "default": ""})
+  t.Column("appellation_name", "string", {"default": ""})
+  t.Column("location", "string", {})
+  t.Column("color", "string", {})
+  t.Column("culture", "string", {"default": ""})
+  t.Column("robe", "string", {"default": ""})
+  t.Column("nose", "string", {"default": ""})
+  t.Column("taste", "string", {"default": ""})
+  t.Column("dishes", "string", {"default": ""})
+  t.Column("season", "string", {"default": ""})
+}

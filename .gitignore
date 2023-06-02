@@ -1,1 +1,5 @@
 .idea
+coverage.out
+clavavin
+run.sh
+database.yml
