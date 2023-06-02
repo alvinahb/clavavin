@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/forms"
 	"github.com/alvinahb/clavavin/internal/models"
 	"github.com/alvinahb/clavavin/internal/render"
 )
@@ -41,18 +41,52 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
-// GetAddWine renders the add wine page
-func (m *Repository) GetAddWine(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "add_wine.page.tmpl", &models.TemplateData{})
+// AddWine renders the add wine page
+func (m *Repository) AddWine(w http.ResponseWriter, r *http.Request) {
+	var emptyWine models.Wine
+	data := make(map[string]interface{})
+	data["wine"] = emptyWine
+
+	render.RenderTemplate(w, r, "add_wine.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+		Data: data,
+	})
 }
 
 // PostAddWine
 func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
-	bottle := r.Form.Get("bottle")
-	domain := r.Form.Get("domain")
-	year := r.Form.Get("year")
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
-	w.Write([]byte(fmt.Sprintf("Bootle: %s - Domain: %s - Year: %s", bottle, domain, year)))
+	wine := models.Wine{
+		Bottle:   r.Form.Get("bottle"),
+		Domain:   r.Form.Get("domain"),
+		Year:     r.Form.Get("year"),
+		Location: r.Form.Get("location"),
+		Color:    r.Form.Get("color"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Required("bottle", "domain", "year", "location", "color")
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["wine"] = wine
+
+		m.App.Session.Put(r.Context(), "Error", "Ce vin n'a pas pu être ajouté...")
+		render.RenderTemplate(w, r, "add_wine.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Nouveau vin ajouté !")
+	http.Redirect(w, r, "/nouveau-vin", http.StatusSeeOther)
 }
 
 type jsonResponse struct {
@@ -60,7 +94,7 @@ type jsonResponse struct {
 	Message string `json:"message"`
 }
 
-// PostAddWineJSON handles request for availability and sends JSON response
+// PostAddWineJSON handles request and sends JSON response
 func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
 		OK:      true,

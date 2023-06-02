@@ -19,7 +19,10 @@
 {{end}}
 
 {{define "content"}}
-    <form action="/nouveau-vin" method="post" class="needs-validation" novalidate>
+
+    {{$res := index .Data "wine"}}
+
+    <form action="/nouveau-vin" method="post" novalidate>  <!-- class="needs-validation" removed -->
         <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
         <div class="row">
             <div class="col-4 align-self-center">
@@ -27,17 +30,29 @@
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="bottle" placeholder="Nom de la bouteille*" required>
+                                {{with .Form.Errors.Get "bottle"}}
+                                    <label class="text-danger">{{.}}</label>
+                                {{end}}
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "bottle"}} is-invalid {{end}}"
+                                    name="bottle" placeholder="Nom de la bouteille*" value="{{$res.Bottle}}" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="domain" placeholder="Nom du domaine*" required>
+                                {{with .Form.Errors.Get "domain"}}
+                                    <label class="text-danger">{{.}}</label>
+                                {{end}}
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "domain"}} is-invalid {{end}}"
+                                    name="domain" placeholder="Nom du domaine*" value="{{$res.Domain}}" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2 justify-content-center">
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" name="year" placeholder="Millésime*" required>
+                                {{with .Form.Errors.Get "year"}}
+                                    <label class="text-danger">{{.}}</label>
+                                {{end}}
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "year"}} is-invalid {{end}}"
+                                    name="year" placeholder="Millésime*" value="{{$res.Year}}" required>
                             </div>
                         </div>
                     </div>
@@ -61,12 +76,20 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="location" placeholder="Origine géographique*" required>
+                                {{with .Form.Errors.Get "location"}}
+                                    <label class="text-danger">{{.}}</label>
+                                {{end}}
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "location"}} is-invalid {{end}}"
+                                    name="location" placeholder="Origine géographique*" value="{{$res.Location}}" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" name="color" placeholder="Couleur*" required>
+                                {{with .Form.Errors.Get "color"}}
+                                    <label class="text-danger">{{.}}</label>
+                                {{end}}
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "color"}} is-invalid {{end}}"
+                                    name="color" placeholder="Couleur*" value="{{$res.Color}}" required>
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" name="culture" placeholder="Culture">
@@ -137,10 +160,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.getElementById("submitButton").addEventListener("click", function () {
-            attention.toast({icon: "success", msg: "Vin ajouté avec succès !"});
-        })
-
         // Date picker
         const elem = document.querySelector('input[name="year"]');
         const datepicker = new Datepicker(elem, {
@@ -198,6 +217,14 @@
                 toast: toast,
             }
         }
+
+        {{with .Error}}
+            attention.toast({icon: "error", msg: {{.}}});
+        {{end}}
+
+        {{with .Flash}}
+            attention.toast({icon: "success", msg: {{.}}});
+        {{end}}
 
     </script>
 {{end}}
