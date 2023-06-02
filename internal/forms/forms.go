@@ -1,7 +1,6 @@
 package forms
 
 import (
-	"net/http"
 	"net/url"
 	"strings"
 )
@@ -21,8 +20,8 @@ func New(data url.Values) *Form {
 }
 
 // Has checks if form field is in post and not empty
-func (f *Form) Has(field string, r *http.Request) bool {
-	x := r.Form.Get(field)
+func (f *Form) Has(field string) bool {
+	x := f.Get(field)
 	if x == "" {
 		return false
 	}
