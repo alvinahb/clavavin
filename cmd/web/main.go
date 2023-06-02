@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/alvinahb/clavavin/pkg/config"
-	"github.com/alvinahb/clavavin/pkg/handlers"
-	"github.com/alvinahb/clavavin/pkg/render"
+	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/handlers"
+	"github.com/alvinahb/clavavin/internal/render"
 )
 
 const portNumber = ":8080"

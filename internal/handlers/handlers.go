@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alvinahb/clavavin/pkg/config"
-	"github.com/alvinahb/clavavin/pkg/models"
-	"github.com/alvinahb/clavavin/pkg/render"
+	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/models"
+	"github.com/alvinahb/clavavin/internal/render"
 )
 
 // Repo is the repository used by the handlers
@@ -60,6 +60,7 @@ type jsonResponse struct {
 	Message string `json:"message"`
 }
 
+// PostAddWineJSON handles request for availability and sends JSON response
 func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
 		OK:      true,
@@ -70,8 +71,6 @@ func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	log.Println(string(out))
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)

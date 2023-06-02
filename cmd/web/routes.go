@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/alvinahb/clavavin/pkg/config"
-	"github.com/alvinahb/clavavin/pkg/handlers"
+	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/alvinahb/clavavin/pkg/config"
-	"github.com/alvinahb/clavavin/pkg/models"
+	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/models"
 	"github.com/justinas/nosurf"
 )
 
