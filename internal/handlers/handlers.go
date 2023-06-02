@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/alvinahb/clavavin/internal/config"
 	"github.com/alvinahb/clavavin/internal/forms"
+	"github.com/alvinahb/clavavin/internal/helpers"
 	"github.com/alvinahb/clavavin/internal/models"
 	"github.com/alvinahb/clavavin/internal/render"
 )
@@ -57,7 +57,7 @@ func (m *Repository) AddWine(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
 
@@ -103,7 +103,8 @@ func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "    ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
