@@ -5,10 +5,13 @@ import (
 	"net/http"
 
 	"github.com/alvinahb/clavavin/internal/config"
+	"github.com/alvinahb/clavavin/internal/driver"
 	"github.com/alvinahb/clavavin/internal/forms"
 	"github.com/alvinahb/clavavin/internal/helpers"
 	"github.com/alvinahb/clavavin/internal/models"
 	"github.com/alvinahb/clavavin/internal/render"
+	"github.com/alvinahb/clavavin/internal/repository"
+	"github.com/alvinahb/clavavin/internal/repository/dbrepo"
 )
 
 // Repo is the repository used by the handlers
@@ -17,12 +20,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
