@@ -30,11 +30,11 @@
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                {{with .Form.Errors.Get "bottle"}}
+                                {{with .Form.Errors.Get "name"}}
                                     <label class="text-danger">{{.}}</label>
                                 {{end}}
-                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "bottle"}} is-invalid {{end}}"
-                                    name="bottle" placeholder="Nom de la bouteille*" value="{{$res.Bottle}}" required>
+                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "name"}} is-invalid {{end}}"
+                                    name="name" placeholder="Nom de la bouteille*" value="{{$res.Name}}" required>
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
