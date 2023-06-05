@@ -23,7 +23,7 @@ var theTests = []struct {
 	{"about", "/a-propos", "GET", []postData{}, http.StatusOK},
 	{"new-wine", "/nouveau-vin", "GET", []postData{}, http.StatusOK},
 	{"post-new-wine", "/nouveau-vin", "POST", []postData{
-		{key: "bottle", value: "Jolie Bouteille"},
+		{key: "name", value: "Jolie Bouteille"},
 		{key: "domain", value: "Domaine Ensoleillé"},
 		{key: "year", value: "2019"},
 		{key: "location", value: "Languedoc"},

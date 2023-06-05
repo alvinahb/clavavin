@@ -38,12 +38,12 @@ func NewHandlers(r *Repository) {
 
 // Home renders the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About renders the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 // AddWine renders the add wine page
@@ -52,7 +52,7 @@ func (m *Repository) AddWine(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["wine"] = emptyWine
 
-	render.RenderTemplate(w, r, "add_wine.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "add_wine.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -67,7 +67,7 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 	}
 
 	wine := models.Wine{
-		Bottle:   r.Form.Get("bottle"),
+		Name:     r.Form.Get("name"),
 		Domain:   r.Form.Get("domain"),
 		Year:     r.Form.Get("year"),
 		Location: r.Form.Get("location"),
@@ -76,14 +76,14 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 
 	form := forms.New(r.PostForm)
 
-	form.Required("bottle", "domain", "year", "location", "color")
+	form.Required("name", "domain", "year", "location", "color")
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
 		data["wine"] = wine
 
 		m.App.Session.Put(r.Context(), "Error", "Ce vin n'a pas pu être ajouté...")
-		render.RenderTemplate(w, r, "add_wine.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "add_wine.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})

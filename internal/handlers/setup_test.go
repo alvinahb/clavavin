@@ -12,7 +12,6 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/alvinahb/clavavin/internal/config"
-	"github.com/alvinahb/clavavin/internal/driver"
 	"github.com/alvinahb/clavavin/internal/models"
 	"github.com/alvinahb/clavavin/internal/render"
 	"github.com/go-chi/chi/v5"
@@ -100,14 +99,6 @@ func getRoutes() http.Handler {
 
 	app.Session = session
 
-	// Connect to database
-	log.Println("Connecting to database...")
-	db, err := driver.ConnectSQL("host=localhost port=5432 database=clavavin user=postgres password=Linasister.20")
-	if err != nil {
-		log.Fatal("Cannot connect to database ! Dying...")
-	}
-	log.Println("Connected to database !")
-
 	tc, err := CreateTestTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
@@ -116,9 +107,9 @@ func getRoutes() http.Handler {
 	app.TemplateCache = tc
 	app.UseCache = true
 
-	repo := NewRepo(&app, db)
+	repo := NewRepo(&app)
 	NewHandlers(repo)
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	mux := chi.NewRouter()
 
