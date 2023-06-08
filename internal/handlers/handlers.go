@@ -115,3 +115,8 @@ func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
 }
+
+// WineMap renders the wine map page
+func (m *Repository) WineMap(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "wine_map.page.tmpl", &models.TemplateData{})
+}

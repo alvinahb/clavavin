@@ -1,7 +1,57 @@
 {{template "base" .}}
 
+{{define "css"}}
+    <style>
+        #about-title{
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5em;
+        }
+        #about-content {
+            text-align: justify;
+            margin-bottom: 5em;
+        }
+        #about-footer {
+            text-align: center;
+            font-weight: 100;
+            font-size: 75%;
+        }
+    </style>
+{{end}}
+
 {{define "content"}}
+    <div class="row" id="about-title">
+        <h3>Clav à Vin</h3>
+    </div>
+
     <div class="row">
-        <h1>A propos de nous !</h1>
+        <div class="col-3"></div>
+
+        <div class="col-6" id="about-content">
+            <p>
+                Avez-vous déjà goûté un vin et regardé son étiquette en vous disant : "Tiens, il faudrait que je m'en souvienne !" ?
+                Ou même pris une photo de la bouteille, aujourd'hui perdue quelque part dans votre smartphone ?</br>
+                </br>
+                Avec Clav à Vin, vous pourrez enregistrer chaque vin qui aura croisé votre route aussi précisément que vous le souhaitez,
+                de sa couleur jusqu'aux associations de plats en passant par son nez, palais ou encore une photo de l'étiquette.</br>
+                </br>
+                Vous avez la possibilité de laisser votre avis, ainsi que de consulter d'autres vins ajoutés et les avis que d'autres ont
+                pu laisser.</br>
+                </br>
+                Tous à vos bouteilles, voilà enfin une bonne raison d'en ouvrir une nouvelle !
+            </p>
+        </div>
+
+        <div class="col-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-6" id="about-footer">
+            L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
+        </div>
+
+        <div class="col-3"></div>
     </div>
 {{end}}
