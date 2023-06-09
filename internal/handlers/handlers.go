@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -122,28 +121,6 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "flash", "Nouveau vin ajouté !")
 	http.Redirect(w, r, "/nouveau-vin", http.StatusSeeOther)
-}
-
-type jsonResponse struct {
-	OK      bool   `json:"ok"`
-	Message string `json:"message"`
-}
-
-// PostAddWineJSON handles request and sends JSON response
-func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
-	resp := jsonResponse{
-		OK:      true,
-		Message: "Ajouté!",
-	}
-
-	out, err := json.MarshalIndent(resp, "", "    ")
-	if err != nil {
-		helpers.ServerError(w, err)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(out)
 }
 
 // WineMap renders the wine map page

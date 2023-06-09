@@ -7,10 +7,6 @@ import (
 	"github.com/alvinahb/clavavin/internal/models"
 )
 
-func (m *postgresDBRepo) AllUsers() bool {
-	return true
-}
-
 // InsertWine inserts a wine into the database
 func (m *postgresDBRepo) InsertWine(res models.Wine) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

@@ -34,6 +34,16 @@ func NewDatabase(dsn string) (*sql.DB, error) {
 	return db, nil
 }
 
+// testDB tries to ping the database
+func testDB(d *sql.DB) error {
+	err := d.Ping()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // ConnectSQL creates database pool for Postgres
 func ConnectSQL(dsn string) (*DB, error) {
 	d, err := NewDatabase(dsn)
@@ -52,14 +62,4 @@ func ConnectSQL(dsn string) (*DB, error) {
 	}
 
 	return dbConn, err
-}
-
-// testDB tries to ping the database
-func testDB(d *sql.DB) error {
-	err := d.Ping()
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

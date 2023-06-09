@@ -13,6 +13,15 @@
     padding-right: 1.5em;
 }
 
+#page-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5em;
+}
+a {
+    text-decoration: none;
+}
+
 .footer {
     height: 18em;
     background-color: rgb(8, 105, 8);
