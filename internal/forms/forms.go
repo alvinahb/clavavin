@@ -38,6 +38,17 @@ func (f *Form) Required(fields ...string) {
 	}
 }
 
+// ContentIs checks if content of field is in values
+func (f *Form) ContentIs(field string, values []string) {
+	value := f.Get(field)
+	for _, item := range values {
+		if value == item {
+			return
+		}
+	}
+	f.Errors.Add(field, "Valeur invalide")
+}
+
 // Valid returns true if there are no errors, otherwise false
 func (f *Form) Valid() bool {
 	return len(f.Errors) == 0

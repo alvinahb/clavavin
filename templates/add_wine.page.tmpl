@@ -15,6 +15,12 @@
             background-color: rgb(8, 160, 8);
             border-color: rgb(8, 160, 8);
         }
+        select option {
+            color: black;
+        }
+        .dropdown-placeholder {
+            color: grey;
+        }
     </style>
 {{end}}
 
@@ -88,8 +94,14 @@
                                 {{with .Form.Errors.Get "color"}}
                                     <label class="text-danger">{{.}}</label>
                                 {{end}}
-                                <input type="text" class="form-control text-center {{with .Form.Errors.Get "color"}} is-invalid {{end}}"
-                                    name="color" placeholder="Couleur*" value="{{$res.Color}}" required>
+                                <select class="form-select dropdown-placeholder {{with .Form.Errors.Get "color"}} is-invalid {{end}}" id="color" name="color" placeholder="Origine géographique*" required>
+                                    <option value="" style="color: grey;" disabled selected>Couleur</option>
+                                    <option value="Rouge">Rouge</option>
+                                    <option value="Blanc">Blanc</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Rosé">Rosé</option>
+                                    <option value="Champagne">Champagne</option>
+                                </select>
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control text-center" name="culture" placeholder="Culture">
@@ -97,7 +109,7 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="variety" placeholder="Cépage(s)">
+                                <input type="text" class="form-control text-center" name="varieties" placeholder="Cépage(s)">
                             </div>
                         </div>
                     </div>
@@ -122,7 +134,7 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="associations" placeholder="Association de plats">
+                                <input type="text" class="form-control text-center" name="dishes " placeholder="Association de plats">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
@@ -167,6 +179,12 @@
             format: "yyyy",
         });
 
+        // Color selection dropdown
+        var selectColor = document.getElementById("color");
+        selectColor.addEventListener("change", function() {
+            this.classList.remove("dropdown-placeholder");
+        });
+
         // Form validation
         (() => {
             'use strict'
@@ -200,7 +218,7 @@
                     toast: true,
                     title: msg,
                     position: 'top-end',
-                    icon: "success",
+                    icon: icon,
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,

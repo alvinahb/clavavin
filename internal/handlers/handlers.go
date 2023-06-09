@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/alvinahb/clavavin/internal/config"
@@ -66,28 +67,55 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var appellation = ""
+	if r.Form.Get("appellationType") != "" || r.Form.Get("appellationName") != "" {
+		appellation = fmt.Sprintf("%s - %s",
+			r.Form.Get("appellationType"), r.Form.Get("appellationName"))
+	}
+
 	wine := models.Wine{
-		Name:     r.Form.Get("name"),
-		Domain:   r.Form.Get("domain"),
-		Year:     r.Form.Get("year"),
-		Location: r.Form.Get("location"),
-		Color:    r.Form.Get("color"),
+		Name:        r.Form.Get("name"),
+		Domain:      r.Form.Get("domain"),
+		Year:        r.Form.Get("year"),
+		Appellation: appellation,
+		Location:    r.Form.Get("location"),
+		Color:       r.Form.Get("color"),
+		Culture:     r.Form.Get("culture"),
+		Varieties:   r.Form.Get("varieties"),
+		Robe:        r.Form.Get("robe"),
+		Nose:        r.Form.Get("nose"),
+		Taste:       r.Form.Get("taste"),
+		Dishes:      r.Form.Get("dishes"),
+		Season:      r.Form.Get("season"),
 	}
 
 	form := forms.New(r.PostForm)
 
 	form.Required("name", "domain", "year", "location", "color")
+	if r.Form.Get("appellationName") != "" {
+		form.ContentIs("appellationType", []string{"AOC", "AOP"})
+	} else {
+		form.ContentIs("appellationType", []string{""})
+	}
+	// TODO: form.ContentIs("location", []string{})
+	form.ContentIs("color", []string{"Rouge", "Blanc", "Orange", "Rosé"})
+	form.ContentIs("season", []string{"", "Printemps", "Eté", "Automne", "Hiver"})
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
 		data["wine"] = wine
 
-		m.App.Session.Put(r.Context(), "Error", "Ce vin n'a pas pu être ajouté...")
+		m.App.Session.Put(r.Context(), "error", "Ce vin n'a pas pu être ajouté...")
 		render.Template(w, r, "add_wine.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
 		return
+	}
+
+	err = m.DB.InsertWine(wine)
+	if err != nil {
+		helpers.ServerError(w, err)
 	}
 
 	m.App.Session.Put(r.Context(), "flash", "Nouveau vin ajouté !")

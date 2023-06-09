@@ -16,21 +16,20 @@ type User struct {
 
 // Wine is the wine model
 type Wine struct {
-	ID              int
-	Name            string
-	Domain          string
-	Year            string
-	AppellationType string
-	AppellationName string
-	Location        string
-	Color           string
-	Culture         string
-	Varieties       []string
-	Robe            string
-	Nose            string
-	Taste           string
-	Dishes          []string
-	Season          string
+	ID          int
+	Name        string
+	Domain      string
+	Year        string
+	Appellation string
+	Location    string
+	Color       string
+	Culture     string
+	Varieties   string
+	Robe        string
+	Nose        string
+	Taste       string
+	Dishes      string
+	Season      string
 }
 
 // Opinion is the opinion model

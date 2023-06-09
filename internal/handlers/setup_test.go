@@ -119,9 +119,9 @@ func getRoutes() http.Handler {
 
 	mux.Get("/", Repo.Home)
 	mux.Get("/a-propos", Repo.About)
-
 	mux.Get("/nouveau-vin", Repo.AddWine)
 	mux.Post("/nouveau-vin", Repo.PostAddWine)
+	mux.Get("/carte-des-vins", Repo.WineMap)
 
 	fileServer := http.FileServer(http.Dir("./static"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
