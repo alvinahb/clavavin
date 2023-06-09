@@ -12,6 +12,14 @@
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link href="/static/css/styles.css" rel="stylesheet">
 
+        <style>
+            #page-title{
+                text-align: center;
+                font-weight: bold;
+                margin-bottom: 5em;
+            }
+        </style>
+
         {{block "css" .}}
 
         {{end}}
@@ -24,7 +32,7 @@
                 <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Les vins</a>
+                            <a class="nav-link" aria-current="page" href="/les-vins">Les vins</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/nouveau-vin">Ajouter un vin</a>

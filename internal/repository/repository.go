@@ -6,4 +6,5 @@ type DatabaseRepo interface {
 	AllUsers() bool
 
 	InsertWine(res models.Wine) error
+	AllWinesSummary() ([]models.Wine, error)
 }

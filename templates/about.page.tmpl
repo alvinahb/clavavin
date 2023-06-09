@@ -2,11 +2,6 @@
 
 {{define "css"}}
     <style>
-        #about-title{
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 5em;
-        }
         #about-content {
             text-align: justify;
             margin-bottom: 5em;
@@ -20,13 +15,11 @@
 {{end}}
 
 {{define "content"}}
-    <div class="row" id="about-title">
+    <div class="row" id="page-title">
         <h3>Clav à Vin</h3>
     </div>
 
-    <div class="row">
-        <div class="col-3"></div>
-
+    <div class="row justify-content-center">
         <div class="col-6" id="about-content">
             <p>
                 Avez-vous déjà goûté un vin et regardé son étiquette en vous disant : "Tiens, il faudrait que je m'en souvienne !" ?
@@ -41,17 +34,11 @@
                 Tous à vos bouteilles, voilà enfin une bonne raison d'en ouvrir une nouvelle !
             </p>
         </div>
-
-        <div class="col-3"></div>
     </div>
 
-    <div class="row">
-        <div class="col-3"></div>
-
+    <div class="row justify-content-center">
         <div class="col-6" id="about-footer">
             L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
         </div>
-
-        <div class="col-3"></div>
     </div>
 {{end}}

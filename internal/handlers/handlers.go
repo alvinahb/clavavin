@@ -148,3 +148,23 @@ func (m *Repository) PostAddWineJSON(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) WineMap(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "wine_map.page.tmpl", &models.TemplateData{})
 }
+
+// WinesList renders the wines page
+func (m *Repository) WinesList(w http.ResponseWriter, r *http.Request) {
+	wines, err := m.DB.AllWinesSummary()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	if len(wines) == 0 {
+		// No wine
+	}
+
+	data := make(map[string]interface{})
+	data["wines"] = wines
+
+	render.Template(w, r, "wines.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+}

@@ -1,0 +1,39 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="row" id="page-title">
+        <h3>Les Vins</h3>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10">
+            {{$wines := index .Data "wines"}}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Domaine</th>
+                        <th scope="col">Année</th>
+                        <th scope="col">Appellation</th>
+                        <th scope="col">Origine géographique</th>
+                        <th scope="col">Couleur</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{range $wines}}
+                        <tr>
+                            <td>{{.Name}}</td>
+                            <td>{{.Domain}}</td>
+                            <td>{{.Year}}</td>
+                            <td>{{.Appellation}}</td>
+                            <td>{{.Location}}</td>
+                            <td>{{.Color}}</td>
+                        </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{end}}

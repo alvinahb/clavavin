@@ -45,3 +45,42 @@ func (m *postgresDBRepo) InsertWine(res models.Wine) error {
 
 	return nil
 }
+
+// AllWinesSummary returns a slice of all wines in database
+func (m *postgresDBRepo) AllWinesSummary() ([]models.Wine, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var wines []models.Wine
+
+	query := `select id, name, domain, year, appellation, location, color from wines`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return wines, err
+	}
+
+	for rows.Next() {
+		var wine models.Wine
+		err = rows.Scan(
+			&wine.ID,
+			&wine.Name,
+			&wine.Domain,
+			&wine.Year,
+			&wine.Appellation,
+			&wine.Location,
+			&wine.Color,
+		)
+		if err != nil {
+			return wines, err
+		}
+
+		wines = append(wines, wine)
+	}
+
+	if err = rows.Err(); err != nil {
+		return wines, err
+	}
+
+	return wines, nil
+}
