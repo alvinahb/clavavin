@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/alvinahb/clavavin/internal/config"
 	"github.com/alvinahb/clavavin/internal/driver"
@@ -13,6 +14,7 @@ import (
 	"github.com/alvinahb/clavavin/internal/render"
 	"github.com/alvinahb/clavavin/internal/repository"
 	"github.com/alvinahb/clavavin/internal/repository/dbrepo"
+	"github.com/go-chi/chi/v5"
 )
 
 // Repo is the repository used by the handlers
@@ -158,13 +160,34 @@ func (m *Repository) WinesList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(wines) == 0 {
-		// No wine
+		// TODO : No wine
 	}
 
 	data := make(map[string]interface{})
 	data["wines"] = wines
 
-	render.Template(w, r, "wines.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "wines-list.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+}
+
+func (m *Repository) WinePage(w http.ResponseWriter, r *http.Request) {
+	wineID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	wine, err := m.DB.WineByID(wineID)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["wine"] = wine
+
+	render.Template(w, r, "wine.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }

@@ -22,6 +22,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Post("/nouveau-vin", handlers.Repo.PostAddWine)
 	mux.Get("/carte-des-vins", handlers.Repo.WineMap)
 	mux.Get("/les-vins", handlers.Repo.WinesList)
+	mux.Get("/les-vins/{id}", handlers.Repo.WinePage)
 
 	fileServer := http.FileServer(http.Dir("./static"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

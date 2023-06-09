@@ -7,4 +7,5 @@ type DatabaseRepo interface {
 
 	InsertWine(res models.Wine) error
 	AllWinesSummary() ([]models.Wine, error)
+	WineByID(id int) (models.Wine, error)
 }

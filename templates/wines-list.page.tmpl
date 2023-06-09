@@ -1,5 +1,19 @@
 {{template "base" .}}
 
+{{define "css"}}
+    <style>
+        a {
+            color: black;
+        }
+        a:hover{
+            color: grey
+        }
+        a:active {
+            color: black;
+        }
+    </style>
+{{end}}
+
 {{define "content"}}
     <div class="row" id="page-title">
         <h3>Les Vins</h3>
@@ -24,7 +38,7 @@
                 <tbody>
                     {{range $wines}}
                         <tr>
-                            <td>{{.Name}}</td>
+                            <td><a href="/les-vins/{{.ID}}">{{.Name}}</a></td>
                             <td>{{.Domain}}</td>
                             <td>{{.Year}}</td>
                             <td>{{.Appellation}}</td>

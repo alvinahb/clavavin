@@ -84,3 +84,42 @@ func (m *postgresDBRepo) AllWinesSummary() ([]models.Wine, error) {
 
 	return wines, nil
 }
+
+// WineByID returns the information about a wine given its ID
+func (m *postgresDBRepo) WineByID(id int) (models.Wine, error) {
+	_, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var wine models.Wine
+
+	query := `select id, name, domain, year, appellation, location, color,
+		culture, varieties, robe, nose, taste, dishes, season
+		from wines where id=$1`
+
+	row := m.DB.QueryRow(query, id)
+	err := row.Scan(
+		&wine.ID,
+		&wine.Name,
+		&wine.Domain,
+		&wine.Year,
+		&wine.Appellation,
+		&wine.Location,
+		&wine.Color,
+		&wine.Culture,
+		&wine.Varieties,
+		&wine.Robe,
+		&wine.Nose,
+		&wine.Taste,
+		&wine.Dishes,
+		&wine.Season,
+	)
+	if err != nil {
+		return wine, err
+	}
+
+	if err = row.Err(); err != nil {
+		return wine, err
+	}
+
+	return wine, nil
+}
