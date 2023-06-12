@@ -88,12 +88,13 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 
 	form.Required("name", "domain", "year", "location", "color")
 	if r.Form.Get("appellationName") != "" {
+		form.Has("appellationType")
 		form.ContentIs("appellationType", []string{"AOC", "AOP"})
 	} else {
 		form.ContentIs("appellationType", []string{""})
 	}
 	// TODO: form.ContentIs("location", []string{})
-	form.ContentIs("color", []string{"Rouge", "Blanc", "Orange", "Rosé"})
+	form.ContentIs("color", []string{"Rouge", "Blanc", "Orange", "Rosé", "Champagne"})
 	form.ContentIs("season", []string{"", "Printemps", "Eté", "Automne", "Hiver"})
 
 	if !form.Valid() {

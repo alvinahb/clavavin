@@ -15,7 +15,7 @@ func (m *postgresDBRepo) InsertWine(res models.Wine) error {
 	query := `insert into wines (name, domain, year, appellation_type,
 		appellation_name, location, color, culture, varieties, robe, nose,
 		taste, dishes, season, created_at, updated_at) values ($1, $2, $3,
-		$4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`
+		$4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`
 
 	_, err := m.DB.ExecContext(ctx, query,
 		res.Name,

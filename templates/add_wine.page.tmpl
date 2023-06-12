@@ -77,7 +77,7 @@
                                 </select>                        
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" name="appellationName" placeholder="Appellation">
+                                <input type="text" class="form-control" name="appellationName" placeholder="Appellation" value="{{$res.AppellationName}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
@@ -95,7 +95,7 @@
                                     <label class="text-danger">{{.}}</label>
                                 {{end}}
                                 <select class="form-select dropdown-placeholder {{with .Form.Errors.Get "color"}} is-invalid {{end}}"
-                                    id="color" name="color" placeholder="Origine géographique*"  value="{{$res.Location}}" required>
+                                    id="color" name="color" placeholder="Origine géographique*" required>
                                     <option value="" style="color: grey;" disabled selected>Couleur</option>
                                     <option value="Rouge">Rouge</option>
                                     <option value="Blanc">Blanc</option>
@@ -135,7 +135,7 @@
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="dishes " placeholder="Association de plats" value="{{$res.Dishes}}">
+                                <input type="text" class="form-control text-center" name="dishes" placeholder="Association de plats" value="{{$res.Dishes}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
@@ -178,6 +178,7 @@
         const datepicker = new Datepicker(elem, {
             pickLevel: 2,
             format: "yyyy",
+            maxDate: "2023-12-31",
         });
 
         // Color selection dropdown
