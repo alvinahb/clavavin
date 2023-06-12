@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -68,26 +67,21 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var appellation = ""
-	if r.Form.Get("appellationType") != "" || r.Form.Get("appellationName") != "" {
-		appellation = fmt.Sprintf("%s - %s",
-			r.Form.Get("appellationType"), r.Form.Get("appellationName"))
-	}
-
 	wine := models.Wine{
-		Name:        r.Form.Get("name"),
-		Domain:      r.Form.Get("domain"),
-		Year:        r.Form.Get("year"),
-		Appellation: appellation,
-		Location:    r.Form.Get("location"),
-		Color:       r.Form.Get("color"),
-		Culture:     r.Form.Get("culture"),
-		Varieties:   r.Form.Get("varieties"),
-		Robe:        r.Form.Get("robe"),
-		Nose:        r.Form.Get("nose"),
-		Taste:       r.Form.Get("taste"),
-		Dishes:      r.Form.Get("dishes"),
-		Season:      r.Form.Get("season"),
+		Name:            r.Form.Get("name"),
+		Domain:          r.Form.Get("domain"),
+		Year:            r.Form.Get("year"),
+		AppellationType: r.Form.Get("appellationType"),
+		AppellationName: r.Form.Get("appellationName"),
+		Location:        r.Form.Get("location"),
+		Color:           r.Form.Get("color"),
+		Culture:         r.Form.Get("culture"),
+		Varieties:       r.Form.Get("varieties"),
+		Robe:            r.Form.Get("robe"),
+		Nose:            r.Form.Get("nose"),
+		Taste:           r.Form.Get("taste"),
+		Dishes:          r.Form.Get("dishes"),
+		Season:          r.Form.Get("season"),
 	}
 
 	form := forms.New(r.PostForm)
@@ -128,7 +122,7 @@ func (m *Repository) WineMap(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "wine_map.page.tmpl", &models.TemplateData{})
 }
 
-// WinesList renders the wines page
+// WinesList renders the wines list page
 func (m *Repository) WinesList(w http.ResponseWriter, r *http.Request) {
 	wines, err := m.DB.AllWinesSummary()
 	if err != nil {
@@ -148,6 +142,7 @@ func (m *Repository) WinesList(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// // WinePage renders the wine page
 func (m *Repository) WinePage(w http.ResponseWriter, r *http.Request) {
 	wineID, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {

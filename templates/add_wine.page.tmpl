@@ -94,7 +94,8 @@
                                 {{with .Form.Errors.Get "color"}}
                                     <label class="text-danger">{{.}}</label>
                                 {{end}}
-                                <select class="form-select dropdown-placeholder {{with .Form.Errors.Get "color"}} is-invalid {{end}}" id="color" name="color" placeholder="Origine géographique*" required>
+                                <select class="form-select dropdown-placeholder {{with .Form.Errors.Get "color"}} is-invalid {{end}}"
+                                    id="color" name="color" placeholder="Origine géographique*"  value="{{$res.Location}}" required>
                                     <option value="" style="color: grey;" disabled selected>Couleur</option>
                                     <option value="Rouge">Rouge</option>
                                     <option value="Blanc">Blanc</option>
@@ -104,12 +105,12 @@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <input type="text" class="form-control text-center" name="culture" placeholder="Culture">
+                                <input type="text" class="form-control text-center" name="culture" placeholder="Culture"  value="{{$res.Culture}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="varieties" placeholder="Cépage(s)">
+                                <input type="text" class="form-control text-center" name="varieties" placeholder="Cépage(s)"  value="{{$res.Varieties}}">
                             </div>
                         </div>
                     </div>
@@ -119,27 +120,27 @@
                     <div class="col-10">
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="robe" placeholder="Robe">
+                                <input type="text" class="form-control text-center" name="robe" placeholder="Robe" value="{{$res.Robe}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2 justify-content-center">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="nose" placeholder="Nez">
+                                <input type="text" class="form-control text-center" name="nose" placeholder="Nez" value="{{$res.Nose}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="taste" placeholder="Palais">
+                                <input type="text" class="form-control text-center" name="taste" placeholder="Palais" value="{{$res.Taste}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="dishes " placeholder="Association de plats">
+                                <input type="text" class="form-control text-center" name="dishes " placeholder="Association de plats" value="{{$res.Dishes}}">
                             </div>
                         </div>
                         <div class="row mb-2 mt-2">
                             <div class="col-12">
-                                <input type="text" class="form-control text-center" name="season" placeholder="Saison">
+                                <input type="text" class="form-control text-center" name="season" placeholder="Saison" value="{{$res.Season}}">
                             </div>
                         </div>
                     </div>

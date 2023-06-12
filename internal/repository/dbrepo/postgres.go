@@ -12,16 +12,17 @@ func (m *postgresDBRepo) InsertWine(res models.Wine) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	query := `insert into wines (name, domain, year, appellation,
-		location, color, culture, varieties, robe, nose, taste, 
-		dishes, season, created_at, updated_at) values ($1, $2, $3,
+	query := `insert into wines (name, domain, year, appellation_type,
+		appellation_name, location, color, culture, varieties, robe, nose,
+		taste, dishes, season, created_at, updated_at) values ($1, $2, $3,
 		$4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`
 
 	_, err := m.DB.ExecContext(ctx, query,
 		res.Name,
 		res.Domain,
 		res.Year,
-		res.Appellation,
+		res.AppellationType,
+		res.AppellationName,
 		res.Location,
 		res.Color,
 		res.Culture,
@@ -49,7 +50,7 @@ func (m *postgresDBRepo) AllWinesSummary() ([]models.Wine, error) {
 
 	var wines []models.Wine
 
-	query := `select id, name, domain, year, appellation, location, color from wines`
+	query := `select id, name, domain, year, appellation_type, appellation_name, location, color from wines`
 
 	rows, err := m.DB.QueryContext(ctx, query)
 	if err != nil {
@@ -63,7 +64,8 @@ func (m *postgresDBRepo) AllWinesSummary() ([]models.Wine, error) {
 			&wine.Name,
 			&wine.Domain,
 			&wine.Year,
-			&wine.Appellation,
+			&wine.AppellationType,
+			&wine.AppellationName,
 			&wine.Location,
 			&wine.Color,
 		)
@@ -88,8 +90,8 @@ func (m *postgresDBRepo) WineByID(id int) (models.Wine, error) {
 
 	var wine models.Wine
 
-	query := `select id, name, domain, year, appellation, location, color,
-		culture, varieties, robe, nose, taste, dishes, season
+	query := `select id, name, domain, year, appellation_type, appellation_name,
+		location, color, culture, varieties, robe, nose, taste, dishes, season
 		from wines where id=$1`
 
 	row := m.DB.QueryRow(query, id)
@@ -98,7 +100,8 @@ func (m *postgresDBRepo) WineByID(id int) (models.Wine, error) {
 		&wine.Name,
 		&wine.Domain,
 		&wine.Year,
-		&wine.Appellation,
+		&wine.AppellationType,
+		&wine.AppellationName,
 		&wine.Location,
 		&wine.Color,
 		&wine.Culture,
