@@ -32,6 +32,14 @@ func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	}
 }
 
+// NewTestRepo creates a new repository
+func NewTestRepo(a *config.AppConfig) *Repository {
+	return &Repository{
+		App: a,
+		DB:  dbrepo.NewTestingRepo(a),
+	}
+}
+
 // NewHandlers sets the repository for the handlers
 func NewHandlers(r *Repository) {
 	Repo = r
@@ -138,7 +146,7 @@ func (m *Repository) WinesList(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["wines"] = wines
 
-	render.Template(w, r, "wines-list.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "wines_list.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
