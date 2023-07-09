@@ -22,3 +22,20 @@ func (m *testDBRepo) WineByID(id int) (models.Wine, error) {
 
 	return wine, nil
 }
+
+// UserByID returns the information about a user given its ID
+func (m *testDBRepo) UserByID(id int) (models.User, error) {
+	var user models.User
+
+	return user, nil
+}
+
+// UpdateUser updates a user in the database
+func (m *testDBRepo) UpdateUser(user models.User) error {
+	return nil
+}
+
+// Authenticate authenticates the user
+func (m *testDBRepo) Authenticate(email, testPassword string) (int, string, error) {
+	return 1, "", nil
+}
