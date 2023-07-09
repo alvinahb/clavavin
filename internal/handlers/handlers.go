@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -121,6 +122,25 @@ func (m *Repository) PostAddWine(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
+	htmlMessage := fmt.Sprintf(`
+		<strong>New Wine Added !</strong></br>
+		</br>
+		A new bottle has been added :</br>
+		Name : %s</br>
+		Domain : %s</br>
+		Year : %s</br>
+		Location: %s</br>
+		Color : %s</br>
+	`, wine.Name, wine.Domain, wine.Year, wine.Location, wine.Color)
+
+	msg := models.MailData{
+		To:      "clavavin@gmail.com",
+		From:    "noreply@clavavin.fr",
+		Subject: "New Wine",
+		Content: htmlMessage,
+	}
+	m.App.MailChan <- msg
 
 	m.App.Session.Put(r.Context(), "flash", "Nouveau vin ajouté !")
 	http.Redirect(w, r, "/nouveau-vin", http.StatusSeeOther)
