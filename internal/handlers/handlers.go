@@ -225,8 +225,10 @@ func (m *Repository) PostShowLogin(w http.ResponseWriter, r *http.Request) {
 	id, _, err := m.DB.Authenticate(email, password)
 	if err != nil {
 		log.Println(err)
+
 		m.App.Session.Put(r.Context(), "error", "Email ou mot de passe invalide(s)")
 		http.Redirect(w, r, "/mon-compte/connexion", http.StatusSeeOther)
+		return
 	}
 
 	m.App.Session.Put(r.Context(), "user_id", id)
