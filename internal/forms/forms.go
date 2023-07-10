@@ -2,6 +2,7 @@ package forms
 
 import (
 	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -52,4 +53,13 @@ func (f *Form) ContentIs(field string, values []string) {
 // Valid returns true if there are no errors, otherwise false
 func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
+}
+
+func (f *Form) IsEmail(email string) {
+	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
+	re := regexp.MustCompile(emailRegex)
+
+	if !re.MatchString(email) {
+		f.Errors.Add("email", "Format invalide")
+	}
 }

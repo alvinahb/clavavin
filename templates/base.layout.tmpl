@@ -51,7 +51,7 @@
                             <a class="nav-link" href="/a-propos"><span>&Agrave;</span> propos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/se-connecter">Se connecter</a>
+                            <a class="nav-link" href="/mon-compte/connexion">Se connecter</a>
                         </li>
                     </ul>
                 </div>
@@ -95,6 +95,67 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            // Form validation
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+
+            // Result alert
+            let attention = Prompt();
+            function Prompt() {
+                let toast = function(c) {
+                    const {
+                        msg = "",
+                        icon = "",
+                    } = c;
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        title: msg,
+                        position: 'top-end',
+                        icon: icon,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({})
+                }
+
+                return {
+                    toast: toast,
+                }
+            }
+
+            {{with .Error}}
+                attention.toast({icon: "error", msg: {{.}}});
+            {{end}}
+
+            {{with .Flash}}
+                attention.toast({icon: "success", msg: {{.}}});
+            {{end}}
+        </script>
 
         {{block "js" .}}
 
