@@ -51,7 +51,11 @@
                             <a class="nav-link" href="/a-propos"><span>&Agrave;</span> propos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/mon-compte/connexion">Se connecter</a>
+                            {{if eq .IsAuthenticated 1}}
+                                <a class="nav-link" href="/mon-compte/deconnexion">Se déconnecter</a>
+                            {{else}}
+                                <a class="nav-link" href="/mon-compte/connexion">Se connecter</a>
+                            {{end}}
                         </li>
                     </ul>
                 </div>
