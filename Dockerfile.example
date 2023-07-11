@@ -1,0 +1,36 @@
+# Use an official Golang runtime as the base image
+FROM golang:1.20-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Go module dependency files
+COPY go.mod go.sum ./
+
+# Download and install the application dependencies
+RUN go mod download
+
+# Copy the rest of the application source code to the container
+COPY . .
+
+# Set environment variables
+ENV DB_HOST=db \
+    DB_PORT=5432 \
+    DB_USER=myuser \
+    DB_PASSWORD=mypassword \
+    DB_NAME=mydatabase
+
+# Set the working directory to the web directory
+WORKDIR /app/cmd/web
+
+# Build the Go application
+RUN go build -o myapp
+
+# Set the working directory back to the project root directory
+WORKDIR /app
+
+# Expose the port on which your application listens
+EXPOSE 8080
+
+# Define the command to run your application
+CMD ["./cmd/web/myapp"]

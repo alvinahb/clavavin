@@ -3,3 +3,5 @@ coverage.out
 clavavin
 run.sh
 database.yml
+Dockerfile
+docker-compose.yml
